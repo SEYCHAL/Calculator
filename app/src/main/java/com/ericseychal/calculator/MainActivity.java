@@ -28,83 +28,15 @@ public class MainActivity extends AppCompatActivity {
     Button button0;
     Button buttonPoint;
 
-    String bufferText = "0";
-    final String bufferPoint = ",";
-    String bufferOperator = " ";
+    CalculatorManager calculatorManager = new CalculatorManager();
 
-    Addition addition = new Addition();
-    Substraction substraction = new Substraction();
-    Multiplication multiplication = new Multiplication();
-    Division division = new Division();
-    Clear clear = new Clear();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initialView();
-    }
 
-    private String managerButton1to9(String number) {
-        if (bufferText.equals("0")) {
-            bufferText = number;
-        } else {
-            bufferText = bufferText + number;
-        }
-        return treatmentPoint(bufferText);
-    }
-
-    private String managerButtonOperator(String operator) {
-        double result = 0;
-        if (bufferOperator.equals(" ")) {
-            bufferOperator = operator;
-        }
-            result = Double.valueOf(bufferText);
-            switch (bufferOperator) {
-                case "+":
-                    result = addition.addition(result);
-                    break;
-                case "-":
-                    result = substraction.substraction(result);
-                    break;
-                case "*":
-                    result = multiplication.multiplication(result);
-                    break;
-                case "/":
-                    result = division.division(result);
-                    break;
-                case "=":
-                    result = addition.sum();
-            }
-        bufferText = "0";
-        bufferOperator = operator;
-        return treatmentPoint(String.valueOf(result));
-    }
-
-    private String managerButtonPoint() {
-        if (!bufferText.contains(".")) {
-            bufferText = bufferText + ".";
-        }
-        return treatmentPoint(bufferText);
-    }
-
-    private String managerButtonClear() {
-        bufferOperator = " ";
-        return String.valueOf(clear.clear());
-    }
-
-    private String treatmentPoint(String buffer) {
-        if (!bufferPoint.equals(".")) {
-            int index = buffer.indexOf(".");
-            if (index >= 0) {
-                String string = buffer.substring(index);
-                if (buffer.substring(index).equals(".0")){
-                    buffer = buffer.substring(0,index);
-                }
-                buffer = buffer.replace(".",",");
-            }
-        }
-        return buffer;
     }
 
     private void initialView() {
@@ -134,106 +66,106 @@ public class MainActivity extends AppCompatActivity {
         additionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textView.setText(managerButtonOperator("+"));
+                textView.setText(calculatorManager.managerButtonOperator("+"));
             }
         });
         substractionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textView.setText(managerButtonOperator("-"));
+                textView.setText(calculatorManager.managerButtonOperator("-"));
             }
         });
         multiplicationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textView.setText(managerButtonOperator("*"));
+                textView.setText(calculatorManager.managerButtonOperator("*"));
             }
         });
         divisionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textView.setText(managerButtonOperator("/"));
+                textView.setText(calculatorManager.managerButtonOperator("/"));
             }
         });
         equalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textView.setText(managerButtonOperator("="));
+                textView.setText(calculatorManager.managerButtonOperator("="));
             }
         });
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textView.setText(managerButton1to9("1"));
+                textView.setText(calculatorManager.managerButton1to9("1"));
             }
         });
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textView.setText(managerButton1to9("2"));
+                textView.setText(calculatorManager.managerButton1to9("2"));
             }
         });
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textView.setText(managerButton1to9("3"));
+                textView.setText(calculatorManager.managerButton1to9("3"));
             }
         });
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textView.setText(managerButton1to9("4"));
+                textView.setText(calculatorManager.managerButton1to9("4"));
             }
         });
         button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textView.setText(managerButton1to9("5"));
+                textView.setText(calculatorManager.managerButton1to9("5"));
             }
         });
         button6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textView.setText(managerButton1to9("6"));
+                textView.setText(calculatorManager.managerButton1to9("6"));
             }
         });
         button7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textView.setText(managerButton1to9("7"));
+                textView.setText(calculatorManager.managerButton1to9("7"));
             }
         });
         button8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textView.setText(managerButton1to9("8"));
+                textView.setText(calculatorManager.managerButton1to9("8"));
             }
         });
         button9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textView.setText(managerButton1to9("9"));
+                textView.setText(calculatorManager.managerButton1to9("9"));
             }
         });
         button0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textView.setText(managerButton1to9("0"));
+                textView.setText(calculatorManager.managerButton1to9("0"));
             }
         });
 
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textView.setText(managerButtonClear());
+                textView.setText(calculatorManager.managerButtonClear());
             }
         });
 
         buttonPoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textView.setText(managerButtonPoint());
+                textView.setText(calculatorManager.managerButtonPoint());
             }
         });
     }
