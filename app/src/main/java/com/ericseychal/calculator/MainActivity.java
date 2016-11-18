@@ -32,11 +32,7 @@ public class MainActivity extends AppCompatActivity {
     final String bufferPoint = ",";
     String bufferOperator = " ";
 
-    Addition addition = new Addition();
-    Substraction substraction = new Substraction();
-    Multiplication multiplication = new Multiplication();
-    Division division = new Division();
-    Clear clear = new Clear();
+    CalculatorManager calculatorManager = new CalculatorManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,35 +58,35 @@ public class MainActivity extends AppCompatActivity {
             result = Double.valueOf(bufferText);
             switch (bufferOperator) {
                 case "+":
-                    result = addition.addition(result);
+                    result = calculatorManager.addition(result);
                     break;
                 case "-":
-                    result = substraction.substraction(result);
+                    result = calculatorManager.substraction(result);
                     break;
                 case "*":
-                    result = multiplication.multiplication(result);
+                    result = calculatorManager.multiplication(result);
                     break;
                 case "/":
-                    result = division.division(result);
+                    result = calculatorManager.division(result);
                     break;
                 case "=":
-                    result = addition.sum();
+                    result = calculatorManager.sum();
+                    break;
             }
         bufferText = "0";
         bufferOperator = operator;
         return treatmentPoint(String.valueOf(result));
     }
 
+    private String managerButtonClear() {
+        bufferOperator = " ";
+        return treatmentPoint(String.valueOf(calculatorManager.clear()));
+    }
     private String managerButtonPoint() {
         if (!bufferText.contains(".")) {
             bufferText = bufferText + ".";
         }
         return treatmentPoint(bufferText);
-    }
-
-    private String managerButtonClear() {
-        bufferOperator = " ";
-        return String.valueOf(clear.clear());
     }
 
     private String treatmentPoint(String buffer) {
@@ -111,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
         textView = (TextView) findViewById(R.id.result_textview);
         textView.setText("0");
 
-        clearButton = (Button) findViewById(R.id.clear_button);
         buttonPoint = (Button) findViewById(R.id.point_button);
 
         additionButton = (Button) findViewById(R.id.addition_button);
@@ -119,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
         multiplicationButton = (Button) findViewById(R.id.multilication_button);
         divisionButton = (Button) findViewById(R.id.division_button);
         equalButton = (Button) findViewById(R.id.equal_button);
+        clearButton = (Button) findViewById(R.id.clear_button);
 
         button1 = (Button) findViewById(R.id.button_1);
         button2 = (Button) findViewById(R.id.button_2);
@@ -161,6 +157,13 @@ public class MainActivity extends AppCompatActivity {
                 textView.setText(managerButtonOperator("="));
             }
         });
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textView.setText(managerButtonClear());
+            }
+        });
+
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -220,13 +223,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 textView.setText(managerButton1to9("0"));
-            }
-        });
-
-        clearButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textView.setText(managerButtonClear());
             }
         });
 
