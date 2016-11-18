@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
         button8 = (Button) findViewById(R.id.button_8);
         button9 = (Button) findViewById(R.id.button_9);
         button0 = (Button) findViewById(R.id.button_0);
+        
 
         additionButton.setOnClickListener(new View.OnClickListener() {
             @Override
