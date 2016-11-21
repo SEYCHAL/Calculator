@@ -16,26 +16,6 @@ import static android.R.id.tabs;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView textView;
-//    private Button clearButton;
-////    private List<Button> tabButton  = new ArrayList<>();
-//
-//    private Button additionButton;
-//    private Button substractionButton;
-//    private Button multiplicationButton;
-//    private Button divisionButton;
-//    private Button equalButton;
-//
-//    private Button button1;
-//    private Button button2;
-//    private Button button3;
-//    private Button button4;
-//    private Button button5;
-//    private Button button6;
-//    private Button button7;
-//    private Button button8;
-//    private Button button9;
-//    private Button button0;
-//    private Button buttonPoint;
 
     private String bufferText = "0";
     final private String bufferPoint = ",";
