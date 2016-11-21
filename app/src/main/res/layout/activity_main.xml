@@ -62,6 +62,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="20pt"
+            android:tag="7"
             android:text="7" />
 
         <Button
@@ -70,6 +71,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="20pt"
+            android:tag="8"
             android:text="8" />
 
         <Button
@@ -78,6 +80,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="20pt"
+            android:tag="9"
             android:text="9" />
 
         <Button

@@ -6,33 +6,42 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
-    TextView textView;
-    Button clearButton;
+import java.util.ArrayList;
+import java.util.List;
 
-    Button additionButton;
-    Button substractionButton;
-    Button multiplicationButton;
-    Button divisionButton;
-    Button equalButton;
+import hugo.weaving.DebugLog;
 
-    Button button1;
-    Button button2;
-    Button button3;
-    Button button4;
-    Button button5;
-    Button button6;
-    Button button7;
-    Button button8;
-    Button button9;
-    Button button0;
-    Button buttonPoint;
+import static android.R.id.button1;
+import static android.R.id.tabs;
 
-    String bufferText = "0";
-    final String bufferPoint = ",";
-    String bufferOperator = " ";
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private TextView textView;
+//    private Button clearButton;
+////    private List<Button> tabButton  = new ArrayList<>();
+//
+//    private Button additionButton;
+//    private Button substractionButton;
+//    private Button multiplicationButton;
+//    private Button divisionButton;
+//    private Button equalButton;
+//
+//    private Button button1;
+//    private Button button2;
+//    private Button button3;
+//    private Button button4;
+//    private Button button5;
+//    private Button button6;
+//    private Button button7;
+//    private Button button8;
+//    private Button button9;
+//    private Button button0;
+//    private Button buttonPoint;
 
-    CalculatorManager calculatorManager = new CalculatorManager();
+    private String bufferText = "0";
+    final private String bufferPoint = ",";
+    private String bufferOperator = " ";
+
+    private CalculatorManager calculatorManager = new CalculatorManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,24 +64,26 @@ public class MainActivity extends AppCompatActivity {
         if (bufferOperator.equals(" ")) {
             bufferOperator = operator;
         }
-            result = Double.valueOf(bufferText);
-            switch (bufferOperator) {
-                case "+":
-                    result = calculatorManager.addition(result);
-                    break;
-                case "-":
-                    result = calculatorManager.substraction(result);
-                    break;
-                case "*":
-                    result = calculatorManager.multiplication(result);
-                    break;
-                case "/":
-                    result = calculatorManager.division(result);
-                    break;
-                case "=":
-                    result = calculatorManager.sum();
-                    break;
-            }
+        result = Double.valueOf(bufferText);
+        switch (bufferOperator) {
+            case "+":
+                result = calculatorManager.addition(result);
+                break;
+            case "-":
+                result = calculatorManager.substraction(result);
+                break;
+            case "X":
+                result = calculatorManager.multiplication(result);
+                break;
+            case "/":
+                result = calculatorManager.division(result);
+                break;
+            case "=":
+                result = calculatorManager.sum();
+                break;
+            default:
+
+        }
         bufferText = "0";
         bufferOperator = operator;
         return treatmentPoint(String.valueOf(result));
@@ -82,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         bufferOperator = " ";
         return treatmentPoint(String.valueOf(calculatorManager.clear()));
     }
+
     private String managerButtonPoint() {
         if (!bufferText.contains(".")) {
             bufferText = bufferText + ".";
@@ -94,144 +106,40 @@ public class MainActivity extends AppCompatActivity {
             int index = buffer.indexOf(".");
             if (index >= 0) {
                 String string = buffer.substring(index);
-                if (buffer.substring(index).equals(".0")){
-                    buffer = buffer.substring(0,index);
+                if (buffer.substring(index).equals(".0")) {
+                    buffer = buffer.substring(0, index);
                 }
-                buffer = buffer.replace(".",",");
+                buffer = buffer.replace(".", ",");
             }
         }
         return buffer;
     }
 
+    @DebugLog
     private void initialView() {
         textView = (TextView) findViewById(R.id.result_textview);
         textView.setText("0");
+        int[] idButton = {R.id.clear_button, R.id.addition_button, R.id.division_button, R.id.equal_button, R.id.multilication_button, R.id.point_button, R.id.substraction_button, R.id.button_0, R.id.button_1, R.id.button_2, R.id.button_3, R.id.button_4, R.id.button_5, R.id.button_6, R.id.button_7, R.id.button_8, R.id.button_9};
 
-        buttonPoint = (Button) findViewById(R.id.point_button);
+        for (int ids : idButton) {
+            findViewById(ids).setOnClickListener(this);
+        }
+    }
 
-        additionButton = (Button) findViewById(R.id.addition_button);
-        substractionButton = (Button) findViewById(R.id.substraction_button);
-        multiplicationButton = (Button) findViewById(R.id.multilication_button);
-        divisionButton = (Button) findViewById(R.id.division_button);
-        equalButton = (Button) findViewById(R.id.equal_button);
-        clearButton = (Button) findViewById(R.id.clear_button);
+    @Override
+    public void onClick(View view) {
+        Button button = (Button) view;
+        String touch = button.getText().toString();
+        int touchAscii = (int) touch.charAt(0);
 
-        button1 = (Button) findViewById(R.id.button_1);
-        button2 = (Button) findViewById(R.id.button_2);
-        button3 = (Button) findViewById(R.id.button_3);
-        button4 = (Button) findViewById(R.id.button_4);
-        button5 = (Button) findViewById(R.id.button_5);
-        button6 = (Button) findViewById(R.id.button_6);
-        button7 = (Button) findViewById(R.id.button_7);
-        button8 = (Button) findViewById(R.id.button_8);
-        button9 = (Button) findViewById(R.id.button_9);
-        button0 = (Button) findViewById(R.id.button_0);
-        
-
-        additionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textView.setText(managerButtonOperator("+"));
-            }
-        });
-        substractionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textView.setText(managerButtonOperator("-"));
-            }
-        });
-        multiplicationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textView.setText(managerButtonOperator("*"));
-            }
-        });
-        divisionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textView.setText(managerButtonOperator("/"));
-            }
-        });
-        equalButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textView.setText(managerButtonOperator("="));
-            }
-        });
-        clearButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textView.setText(managerButtonClear());
-            }
-        });
-
-
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textView.setText(managerButton1to9("1"));
-            }
-        });
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textView.setText(managerButton1to9("2"));
-            }
-        });
-        button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textView.setText(managerButton1to9("3"));
-            }
-        });
-        button4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textView.setText(managerButton1to9("4"));
-            }
-        });
-        button5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textView.setText(managerButton1to9("5"));
-            }
-        });
-        button6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textView.setText(managerButton1to9("6"));
-            }
-        });
-        button7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textView.setText(managerButton1to9("7"));
-            }
-        });
-        button8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textView.setText(managerButton1to9("8"));
-            }
-        });
-        button9.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textView.setText(managerButton1to9("9"));
-            }
-        });
-        button0.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textView.setText(managerButton1to9("0"));
-            }
-        });
-
-        buttonPoint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textView.setText(managerButtonPoint());
-            }
-        });
+        if (touchAscii == 44) {                            // point
+            textView.setText(managerButtonPoint());
+        } else if (touchAscii < 48 || touchAscii == 61 || touchAscii == 88) {                       //  operator
+            textView.setText(managerButtonOperator(touch));
+        } else if (touchAscii < 58) {                       // 0 to 9
+            textView.setText(managerButton1to9(touch));
+        } else {                                            // Clear
+            textView.setText(managerButtonClear());
+        }
     }
 }
