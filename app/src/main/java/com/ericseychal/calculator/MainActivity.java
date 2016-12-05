@@ -19,6 +19,7 @@ import static android.R.id.button1;
 import static android.R.id.tabs;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnNormalFragmentListener {
+    static final String RACINE_CARRE = "X^2";
     private TextView textView;
 
     private String bufferText = "0";
@@ -78,9 +79,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 result = calculatorManager.sum();
                 break;
             default:
-
         }
         bufferText = "0";
+        bufferOperator = operator;
+        return treatmentPoint(String.valueOf(result));
+    }
+
+    private String managerButtonScientific(String operator) {
+        double result = 0;
+//        if (bufferOperator.equals(" ")) {
+            bufferOperator = operator;
+//        }
+        result = Double.valueOf(bufferText);
+        switch (bufferOperator) {
+            case "X^2":
+                result = calculatorManager.racine(result);
+                operator = " ";
+                break;
+            default:
+        }
+//        bufferText = "0";
         bufferOperator = operator;
         return treatmentPoint(String.valueOf(result));
     }
@@ -115,26 +133,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initialView() {
         textView = (TextView) findViewById(R.id.result_textview);
         textView.setText("0");
-        int[] idButton = {R.id.division_button, R.id.equal_button};
+        int[] idButton = {R.id.clear_button, R.id.equal_button};
 
         for (int ids : idButton) {
             findViewById(ids).setOnClickListener(this);
         }
 
-        // Intensation of first Fragment - NormalFragment
+        // Intensation of Normal Fragment
         NormalFragment normalFragment = (NormalFragment) getSupportFragmentManager().findFragmentById(R.id.normal_fragment);
         normalFragment.setOnNormalFragmentListener(this);
+
+        // Intensation of Scientific Fragment
+        ScientificFragment scientificFragment = (ScientificFragment) getSupportFragmentManager().findFragmentById(R.id.scientific_fragment);
+        if (scientificFragment != null) {
+            scientificFragment.setOnNormalFragmentListener(this);
+        }
     }
 
     private void treatmentButton(String button) {
         int touchAscii = (int) button.charAt(0);
-        if (touchAscii == 44) {                            // point
+        if (button.equals(RACINE_CARRE)) {
+            textView.setText(managerButtonScientific(button));
+        } else if (touchAscii == 44) {                            // point
             textView.setText(managerButtonPoint());
         } else if (touchAscii < 48 || touchAscii == 61 || touchAscii == 88) {                       //  operator
             textView.setText(managerButtonOperator(button));
         } else if (touchAscii < 58) {                       // 0 to 9
             textView.setText(managerButton1to9(button));
-        } else {                                            // Clear
+        } else {                                         // Clear
             textView.setText(managerButtonClear());
         }
     }

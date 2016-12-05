@@ -1,6 +1,7 @@
 package com.ericseychal.calculator;
 
-
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,32 +12,27 @@ import android.widget.Button;
 import hugo.weaving.DebugLog;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class NormalFragment extends Fragment implements View.OnClickListener {
+public class ScientificFragment extends Fragment implements View.OnClickListener  {
     OnNormalFragmentListener onNormalFragmentListener;
 
     public void setOnNormalFragmentListener(OnNormalFragmentListener onNormalFragmentListener) {
         this.onNormalFragmentListener = onNormalFragmentListener;
     }
 
-    public NormalFragment() {
+    public ScientificFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.fragment_normal, container, false);
-            initialButtons(view);
-//            onNormalFragmentListener = (OnNormalFragmentListener) getActivity();
-
+        View view = inflater.inflate(R.layout.fragment_scientific, container, false);
+        initialButtons(view);
         return view;
     }
 
     @DebugLog
     private void initialButtons(View view) {
-        int[] idButton = {R.id.division_button, R.id.addition_button, R.id.multilication_button, R.id.point_button, R.id.substraction_button, R.id.button_0, R.id.button_1, R.id.button_2, R.id.button_3, R.id.button_4, R.id.button_5, R.id.button_6, R.id.button_7, R.id.button_8, R.id.button_9};
+        int[] idButton = {R.id.sin,R.id.cos,R.id.tan,R.id.carre,R.id.sin_1,R.id.cos_1,R.id.tan_1,R.id.x3,R.id.ex,R.id.power10,R.id.x1,R.id.xy,R.id.ln,R.id.log,R.id.sqrl,R.id.sign};
 
         for (int ids : idButton) {
             view.findViewById(ids).setOnClickListener(this);

@@ -59,4 +59,14 @@ public class CalculatorManager {
         operator = "-";
         return sum;
     }
+
+    public double racine (double number) {
+        if (number == 0) {
+            number = sum;
+        }
+        sum = number * number;
+        operator = "=";
+        return sum;
+    }
+
 }
